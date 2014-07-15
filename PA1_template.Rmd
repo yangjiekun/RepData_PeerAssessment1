@@ -39,7 +39,8 @@ The mean and median total number of steps taken each day are `r mean` and `r med
 - Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days(y-axis)
 ```{r}
 mean_interval <- data.frame(mean_interval = tapply(data$steps, data$interval, mean, na.rm = TRUE))
-plot(rownames(mean_interval), mean_interval$mean_interval, type = "l", lwd = 3, xlab = "5-minute interval", ylab = "Average number of steps taken", main = NULL)
+plot(rownames(mean_interval), mean_interval$mean_interval, type = "l", lwd = 3, 
+     xlab = "5-minute interval", ylab = "Average number of steps taken", main = NULL)
 ```
 
 - Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -91,6 +92,12 @@ new_data$day <- as.factor(new_data$day)
 - Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 ```{r}
 library(lattice)
-new_mean_interval <- rbind(data.frame(mean_interval = tapply(new_data[index, 1], new_data[index, 3], mean), interval = as.numeric(levels(new_data$interval)), day = "weekend"), data.frame(mean_interval = tapply(new_data[!index, 1], new_data[!index, 3], mean), interval = as.numeric(levels(new_data$interval)), day = "weekday"))
-xyplot(mean_interval ~ interval | day, data = new_mean_interval, layout = c(1, 2), type = "l", xlab = "Interval", ylab = "Number of steps")
+new_mean_interval <- rbind(data.frame(mean_interval = tapply(new_data[index, 1], new_data[index, 3], mean), 
+                                      interval = as.numeric(levels(new_data$interval)), 
+                                      day = "weekend"), 
+                           data.frame(mean_interval = tapply(new_data[!index, 1], new_data[!index, 3], mean), 
+                                      interval = as.numeric(levels(new_data$interval)), 
+                                      day = "weekday"))
+xyplot(mean_interval ~ interval | day, data = new_mean_interval, 
+       layout = c(1, 2), type = "l", xlab = "Interval", ylab = "Number of steps")
 ```

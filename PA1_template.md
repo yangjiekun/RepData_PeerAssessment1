@@ -47,7 +47,8 @@ The mean and median total number of steps taken each day are 9354.2295 and 10395
 
 ```r
 mean_interval <- data.frame(mean_interval = tapply(data$steps, data$interval, mean, na.rm = TRUE))
-plot(rownames(mean_interval), mean_interval$mean_interval, type = "l", lwd = 3, xlab = "5-minute interval", ylab = "Average number of steps taken", main = NULL)
+plot(rownames(mean_interval), mean_interval$mean_interval, type = "l", lwd = 3, 
+     xlab = "5-minute interval", ylab = "Average number of steps taken", main = NULL)
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
@@ -112,8 +113,14 @@ new_data$day <- as.factor(new_data$day)
 
 ```r
 library(lattice)
-new_mean_interval <- rbind(data.frame(mean_interval = tapply(new_data[index, 1], new_data[index, 3], mean), interval = as.numeric(levels(new_data$interval)), day = "weekend"), data.frame(mean_interval = tapply(new_data[!index, 1], new_data[!index, 3], mean), interval = as.numeric(levels(new_data$interval)), day = "weekday"))
-xyplot(mean_interval ~ interval | day, data = new_mean_interval, layout = c(1, 2), type = "l", xlab = "Interval", ylab = "Number of steps")
+new_mean_interval <- rbind(data.frame(mean_interval = tapply(new_data[index, 1], new_data[index, 3], mean), 
+                                      interval = as.numeric(levels(new_data$interval)), 
+                                      day = "weekend"), 
+                           data.frame(mean_interval = tapply(new_data[!index, 1], new_data[!index, 3], mean), 
+                                      interval = as.numeric(levels(new_data$interval)), 
+                                      day = "weekday"))
+xyplot(mean_interval ~ interval | day, data = new_mean_interval, 
+       layout = c(1, 2), type = "l", xlab = "Interval", ylab = "Number of steps")
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
